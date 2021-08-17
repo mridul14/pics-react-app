@@ -13,10 +13,16 @@ class SearchBar extends React.Component {
     */
     state = { term : '' };
 
+    onFormSubmit = (event) => {
+        event.preventDefault();
+
+        /* Note: while referencing props in Class based components we use 'this' keyword as specified below */
+        this.props.onSubmit(this.state.term);
+    }
     render() {
         return(
             <div className="ui segment">
-                <form className="ui form">
+                <form className="ui form" onSubmit={this.onFormSubmit}>
                     <div className="field">
                         <label>Image Search</label>
                         <input type="text" value={this.state.term} onChange={(event) => this.setState({ term: event.target.value })} />
@@ -26,7 +32,7 @@ class SearchBar extends React.Component {
         );
     }
 //    ------------------------------- Approach 1 -------------------------------
-//    // event is a JS object, that contains a bunch of information
+//    // event is a JS object, that  contains a bunch of information
 //    // about the event that just occurred
 //
 //    onInputChange(event) {
@@ -44,7 +50,6 @@ class SearchBar extends React.Component {
 //                    <div className="field">
 //                        <label>Image Search</label>
 //                        <input type="text" onChange={this.onInputChange} />
-//                        {
 //                        //Notice that we are not using () with onInputChange method,
 //                        //that is because if we put () then onInputChange method will be
 //                        //called when render() is called. But we do not want that, we want
